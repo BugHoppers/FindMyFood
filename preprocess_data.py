@@ -1,16 +1,9 @@
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications.mobilenet import preprocess_input
 
-datagen = ImageDataGenerator(rotation_range=15,
-                             width_shift_range=0.1,
-                             height_shift_range=0.1,
-                             shear_range=0.01,
-                             zoom_range=[0.9, 1.25],
-                             horizontal_flip=True,
-                             vertical_flip=False,
-                             fill_mode='reflect',
-                             data_format='channels_last',
-                             brightness_range=[0.5, 1.5],
-                             rescale=1./255)
+datagen = ImageDataGenerator(
+    rescale=1./255,
+    preprocessing_function=preprocess_input)
 
 
 def generator(dir):
