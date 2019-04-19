@@ -1,12 +1,11 @@
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Flatten, GlobalAveragePooling2D
-from keras.applications import InceptionV3
+from keras.applications import MobileNet
 
 
 def buildmodel(N):
 
-    base_model = InceptionV3(
-        weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+    base_model = MobileNet(weights='imagenet',include_top=False, input_shape=(224, 224, 3))
 
     classifier = base_model.output
     classifier = GlobalAveragePooling2D()(classifier)
@@ -18,9 +17,9 @@ def buildmodel(N):
 
     model = Model(input=base_model.input, output=pred)
 
-    for layer in model.layers[:229]:
+    for layer in model.layers[:20]:
         layer.trainable = False
-    for layer in model.layers[229:]:
+    for layer in model.layers[20:]:
         layer.trainable = True
 
     model.compile(optimizer='Adam',
