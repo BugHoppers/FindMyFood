@@ -1,6 +1,3 @@
 *.pyc
 .ipynb_checkpoints
 __pycache__
-
-food-dataset
-*.h5
