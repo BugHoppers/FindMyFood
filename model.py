@@ -4,6 +4,11 @@ from keras.applications import MobileNet
 
 from preprocess_data import generator
 
+import io
+from keras.preprocessing.image import load_img
+import numpy as np
+from tensorflow.keras.preprocessing import image
+
 
 def buildmodel(N):
 
@@ -41,4 +46,13 @@ def train(dir):
     
     model.save('model.h5')
 
-    return model
+    return 
+    
+def predict(model, imagePath):
+    img = image.load_img(imagePath, target_size=(224, 224))
+    img_pred = image.img_to_array(img)                    # (height, width, channels)
+    img_pred = np.expand_dims(img_pred, axis=0)  
+    img_pred = img_pred/255.
+    preds = model.predict(img_pred)
+    y_classes = preds.argmax(axis=-1)
+    return y_classes
